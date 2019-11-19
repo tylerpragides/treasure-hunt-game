@@ -1,5 +1,6 @@
 
 let treasures = [];
+let freeze = [];
 
 
 function setup() {
@@ -8,9 +9,13 @@ function setup() {
   player1 = new Avatar(random(50,550),random(50,550),4,0,'red',1)
   player2 = new Avatar(random(50,550),random(50,550),4,0,'blue',2)
 
-  for(var i = 0; i < 100; i++){
+  for(var i = 0; i < 10; i++){
     let wow = new Treasure()
     treasures.push(wow)
+  }
+
+  for(var x = 0; x < 3; x++){
+    freeze.push(treasures[int(random(0,treasures.length))])
   }
 }
 
@@ -98,14 +103,14 @@ class Avatar {
 
   openItem(){
 
-  for(let i = 0; i<treasures.length; i++){
-    if(keyIsDown(81) == true && this.player == 1 && player1.x <= treasures[i].x + 10 && player1.x >= treasures[i].x -10 && player1.y <= treasures[i].y + 10 && player1.y >= treasures[i].y){
+  for(let i = 0; i<freeze.length; i++){
+    if(keyIsDown(81) == true && this.player == 1 && player1.x <= freeze[i].x + 10 && player1.x >= freeze[i].x -10 && player1.y <= freeze[i].y + 10 && player1.y >= freeze[i].y){
       player2.speed = 0;
     }
     if(keyIsDown(81) == false && this.player == 1){
       player2.speed = 4;
     }
-    if(keyIsDown(18) == true && this.player == 2 && player2.x <= treasures[i].x + 10 && player2.x >= treasures[i].x -10 && player2.y <= treasures[i].y + 10 && player2.y >= treasures[i].y){
+    if(keyIsDown(18) == true && this.player == 2 && player2.x <= freeze[i].x + 10 && player2.x >= freeze[i].x -10 && player2.y <= freeze[i].y + 10 && player2.y >= freeze[i].y){
       player1.speed = 0;
     }
     if(keyIsDown(18) == false && this.player == 2){
@@ -128,5 +133,11 @@ class Treasure {
     fill(255,0,0)
     line(this.x - 10, this.y - 10, this.x + 10, this.y + 10)
     line(this.x - 10, this.y + 10, this.x + 10, this.y - 10)
+  }
+}
+
+class Items {
+  constructor(){
+    this.x = x
   }
 }

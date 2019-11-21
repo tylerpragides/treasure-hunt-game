@@ -1,4 +1,6 @@
 
+//maybe make freeze only store the number within array treasures that corresponds to the freeze items
+
 let treasures = [];
 let test123;
 let freeze = [];
@@ -7,23 +9,24 @@ function setup() {
   test123 = 'red'
   createCanvas(600, 600);
   background(255,225,185);
-  player1 = new Avatar(random(50,550),random(50,550),4,0,'red',1)
-  player2 = new Avatar(random(50,550),random(50,550),4,0,'blue',2)
+  player1 = new Avatar(random(50,550),random(50,550),3,0,'red',1)
+  player2 = new Avatar(random(50,550),random(50,550),3,0,'blue',2)
 
-  for(var i = 0; i < 2; i++){
+  for(var i = 0; i < 10; i++){
     let wow = new Treasure()
     treasures.push(wow)
   }
-  for(var p = 0; p <= 1; p++){
+  for(var p = 0; p < 1; p++){
     freeze.push(treasures[int(random(0,treasures.length))])
+    console.log(freeze)
   }
 }
 
 function draw(){
-  text(key,33,65)
   background(255,225,185);
   for(var i = 0; i < treasures.length; i++){
-  treasures[i].drawTreasure();
+    stroke(test123)
+    treasures[i].drawTreasure();
 }
 
   player1.drawMe()
@@ -34,6 +37,14 @@ function draw(){
   player2.collideMe()
   player1.openItem()
   player2.openItem()
+  text('player 1: WASD Q',25,45)
+  text('player 2: ARROWKEYS ALT', 25, 25)
+  text('player 1',25,65)
+  text(player1.x, 75,65)
+  text(player1.y, 200,65)
+  text('player2', 25,85)
+  text(player2.x, 75,85)
+  text(player2.y, 200, 85)
 }
 
 class Avatar {
@@ -103,32 +114,31 @@ class Avatar {
 
   openItem(){
 
-  for(let i = 0; i<treasures.length; i++){
-    if(keyIsDown(81) == true && this.player == 1 && player1.x <= treasures[i].x + 10 && player1.x >= treasures[i].x -10 && player1.y <= treasures[i].y + 10 && player1.y >= treasures[i].y){
+
+    if(keyIsDown(81) == true && this.player == 1 && player1.x <= freeze[0].x + 10 && player1.x >= freeze[0].x -10 && player1.y <= freeze[0].y + 10 && player1.y >= freeze[0].y - 10){
       player2.speed = 0;
       test123 = 'green'
     }
     if(keyIsDown(81) == false && this.player == 1){
       player2.speed = 4;
     }
-    if(player1.x >= treasures[i].x + 10 || player1.x <= treasures[i].x -10 || player1.y >= treasures[i].y + 10 || player1.y <= treasures[i].y){
+    if(player1.x >= freeze[0].x + 10 || player1.x <= freeze[0].x -10 || player1.y >= freeze[0].y + 10 || player1.y <= freeze[0].y - 10){
       if(this.player == 1){
         player2.speed = 4;
       }
     }
-    if(keyIsDown(18) == true && this.player == 2 && player2.x <= treasures[i].x + 10 && player2.x >= treasures[i].x -10 && player2.y <= treasures[i].y + 10 && player2.y >= treasures[i].y){
+    if(keyIsDown(18) == true && this.player == 2 && player2.x <= freeze[0].x + 10 && player2.x >= freeze[0].x -10 && player2.y <= freeze[0].y + 10 && player2.y >= freeze[0].y - 10){
       player1.speed = 0;
       test123 = 'green'
     }
     if(keyIsDown(18) == false && this.player == 2){
       player1.speed = 4;
     }
-    if(player2.x >= treasures[i].x + 10 || player2.x <= treasures[i].x -10 || player2.y >= treasures[i].y + 10 || player2.y <= treasures[i].y){
+    if(player2.x >= freeze[0].x + 10 || player2.x <= freeze[0].x -10 || player2.y >= freeze[0].y + 10 || player2.y <= freeze[0].y - 10){
       if(this.player == 2){
         player1.speed = 4;
       }
     }
-  }
 }
 }
 
@@ -140,7 +150,7 @@ class Treasure {
   }
 
   drawTreasure(){
-    stroke(test123)
+    // stroke(test123)
     strokeWeight(2)
     fill(255,0,0)
     line(this.x - 10, this.y - 10, this.x + 10, this.y + 10)

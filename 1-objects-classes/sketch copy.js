@@ -14,8 +14,8 @@ function setup() {
   // test123 = 'red'
   createCanvas(600, 600);
   background(255,225,185);
-  player1 = new Avatar(random(50,550),random(50,550),3,0,'red',1)
-  player2 = new Avatar(random(50,550),random(50,550),3,0,'blue',2)
+  player1 = new Avatar(random(50,550),random(50,550),3.5,0,'red',1,0)
+  player2 = new Avatar(random(50,550),random(50,550),3.5,0,'blue',2,0)
 
   for(var i = 0; i < 10; i++){
     let wow = new Treasure()
@@ -57,17 +57,20 @@ function draw(){
   text('player2', 25,85)
   text(player2.x, 75,85)
   text(player2.y, 200, 85)
+  text(player1.point, 25,550)
+  text(player2.point, 25, 580)
 }
 
 class Avatar {
 
-	constructor(x,y, speed, score, color, player){
+	constructor(x,y, speed, score, color, player, point){
     this.x = x;
     this.y = y;
     this.speed = speed;
     this.score = score;
     this.color = color;
     this.player = player;
+    this.point = point;
 	}
 
 	drawMe(){
@@ -132,29 +135,31 @@ for(var i = 0; i < treasures.length; i++){
       // test123 = 'green'
       // freezes = true
       treasures.splice(i,1)
+      player1.point += 1
     }
-    if(keyIsDown(81) == false && this.player == 1){
-      player2.speed = 4;
-    }
-    if(player1.x >= treasures[i].x + 10 || player1.x <= treasures[i].x -10 || player1.y >= treasures[i].y + 10 || player1.y <= treasures[i].y - 10){
-      if(this.player == 1){
-        player2.speed = 4;
-      }
-    }
+    // if(keyIsDown(81) == false && this.player == 1){
+    //   player2.speed = 4;
+    // }
+    // if(player1.x >= treasures[i].x + 10 || player1.x <= treasures[i].x -10 || player1.y >= treasures[i].y + 10 || player1.y <= treasures[i].y - 10){
+    //   if(this.player == 1){
+    //     player2.speed = 4;
+    //   }
+    // }
     if(keyIsDown(18) == true && this.player == 2 && player2.x <= treasures[i].x + 10 && player2.x >= treasures[i].x -10 && player2.y <= treasures[i].y + 10 && player2.y >= treasures[i].y - 10){
       player1.speed = 0;
       // test123 = 'green'
       // freezes = true
       treasures.splice(i,1)
+      //player2.point += 1
     }
-    if(keyIsDown(18) == false && this.player == 2){
-      player1.speed = 4;
-    }
-    if(player2.x >= treasures[i].x + 10 || player2.x <= treasures[i].x -10 || player2.y >= treasures[i].y + 10 || player2.y <= treasures[i].y - 10){
-      if(this.player == 2){
-        player1.speed = 4;
-      }
-    }
+    // if(keyIsDown(18) == false && this.player == 2){
+    //   player1.speed = 4;
+    // }
+    // if(player2.x >= treasures[i].x + 10 || player2.x <= treasures[i].x -10 || player2.y >= treasures[i].y + 10 || player2.y <= treasures[i].y - 10){
+    //   if(this.player == 2){
+    //     player1.speed = 4;
+    //   }
+    // }
   }
 }
 }

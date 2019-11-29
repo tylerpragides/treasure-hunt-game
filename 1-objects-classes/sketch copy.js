@@ -17,7 +17,7 @@ function setup() {
   player1 = new Avatar(random(50,550),random(50,550),3.5,0,'red',1,0)
   player2 = new Avatar(random(50,550),random(50,550),3.5,0,'blue',2,0)
 
-  for(var i = 0; i < 10; i++){
+  for(var i = 0; i < 30; i++){
     let wow = new Treasure()
     treasures.push(wow)
   }
@@ -57,7 +57,9 @@ function draw(){
   text('player2', 25,85)
   text(player2.x, 75,85)
   text(player2.y, 200, 85)
+  fill('red')
   text(player1.point, 25,550)
+  fill('blue')
   text(player2.point, 25, 580)
 }
 
@@ -131,7 +133,7 @@ class Avatar {
 
 for(var i = 0; i < treasures.length; i++){
     if(keyIsDown(81) == true && this.player == 1 && player1.x <= treasures[i].x + 10 && player1.x >= treasures[i].x -10 && player1.y <= treasures[i].y + 10 && player1.y >= treasures[i].y - 10){
-      player2.speed = 0;
+      // player2.speed = 0;
       // test123 = 'green'
       // freezes = true
       treasures.splice(i,1)
@@ -146,7 +148,7 @@ for(var i = 0; i < treasures.length; i++){
     //   }
     // }
     if(keyIsDown(18) == true && this.player == 2 && player2.x <= treasures[i].x + 10 && player2.x >= treasures[i].x -10 && player2.y <= treasures[i].y + 10 && player2.y >= treasures[i].y - 10){
-      player1.speed = 0;
+      // player1.speed = 0;
       // test123 = 'green'
       // freezes = true
       treasures.splice(i,1)

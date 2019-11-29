@@ -150,6 +150,7 @@ for(var i = 0; i < treasures.length; i++){
       // test123 = 'green'
       // freezes = true
       treasures.splice(i,1)
+      player2.point += 1
       //player2.point += 1
     }
     // if(keyIsDown(18) == false && this.player == 2){

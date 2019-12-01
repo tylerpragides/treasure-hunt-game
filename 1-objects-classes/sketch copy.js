@@ -4,7 +4,7 @@
 
 // 11-25 when the player presses Q or ALT on an spot, it disappears, except if it is on "special" spot everything disappears
 
-// 11-30 maybe make an item that changes the board
+// 11-30 maybe make an item that changes the board, maybe make drawSpecial into a if statement within drawTreasure
 
 let treasures = [];
 

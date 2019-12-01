@@ -1,34 +1,26 @@
 
 //maybe make freeze only store the number within array treasures that corresponds to the freeze items
 //draw treasures after openitem
-//can't put "this" in stroke to change color (line169) unless it is in another function
 
 // 11-25 when the player presses Q or ALT on an spot, it disappears, except if it is on "special" spot everything disappears
 
+// 11-30 maybe make an item that changes the board
+
 let treasures = [];
-// let test123;
-// let freeze = [];
-// let freezes;
 
 function setup() {
-  // test123 = 'red'
   createCanvas(600, 600);
   background(255,225,185);
   player1 = new Avatar(random(50,550),random(50,550),3.5,0,'red',1,0)
   player2 = new Avatar(random(50,550),random(50,550),3.5,0,'blue',2,0)
 
-  for(var i = 0; i < 30; i++){
-    let wow = new Treasure()
-    treasures.push(wow)
+  for(var i = 0; i < 49; i++){
+    // let wow = new Treasure()
+    treasures.push(new Treasure)
   }
   let special = new Treasure()
   treasures.push(special)
   console.log(special)
-
-  // for(var p = 0; p < 1; p++){
-  //   freeze.push(treasures[int(random(0,treasures.length))])
-  //   console.log(freeze)
-  // }
 }
 
 function draw(){
@@ -37,9 +29,11 @@ function draw(){
   player2.openItem()
 
   for(var i = 0; i < treasures.length; i++){
-    // stroke(test123)
+    if(i == 49){
+      treasures[49].drawSpecial();
+    } else if (i <= 48){
     treasures[i].drawTreasure();
-    // treasures[i].eraseTreasure();
+  }
 }
 
   player1.drawMe()
@@ -130,12 +124,9 @@ class Avatar {
   }
 
   openItem(){
-
-for(var i = 0; i < treasures.length; i++){
+    for(var i = 0; i < treasures.length; i++){
     if(keyIsDown(81) == true && this.player == 1 && player1.x <= treasures[i].x + 10 && player1.x >= treasures[i].x -10 && player1.y <= treasures[i].y + 10 && player1.y >= treasures[i].y - 10){
       // player2.speed = 0;
-      // test123 = 'green'
-      // freezes = true
       treasures.splice(i,1)
       player1.point += 1
     }
@@ -149,11 +140,8 @@ for(var i = 0; i < treasures.length; i++){
     // }
     if(keyIsDown(18) == true && this.player == 2 && player2.x <= treasures[i].x + 10 && player2.x >= treasures[i].x -10 && player2.y <= treasures[i].y + 10 && player2.y >= treasures[i].y - 10){
       // player1.speed = 0;
-      // test123 = 'green'
-      // freezes = true
       treasures.splice(i,1)
       player2.point += 1
-      //player2.point += 1
     }
     // if(keyIsDown(18) == false && this.player == 2){
     //   player1.speed = 4;
@@ -171,21 +159,18 @@ class Treasure {
   constructor(){
     this.x = random(20,580);
     this.y = random(20,580);
-    // this.test123 = test123
-    // this.freezes = freezes;
   }
 
   drawTreasure(){
-    // stroke(this.test123)
     stroke(255,0,0)
     strokeWeight(2)
     line(this.x - 10, this.y - 10, this.x + 10, this.y + 10)
     line(this.x - 10, this.y + 10, this.x + 10, this.y - 10)
   }
 
-  // eraseTreasure(){
-  //   if(this.freezes = freezes){
-  //     treasures.splice(special,1)
-  //   }
-  // }
+  drawSpecial(){
+    noStroke()
+    fill(0,120,0)
+    rect(this.x - 10, this.y - 10, 20, 20)
+  }
 }

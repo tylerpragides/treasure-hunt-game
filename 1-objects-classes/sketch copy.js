@@ -7,6 +7,9 @@
 // 11-30 maybe make an item that changes the board, maybe make drawSpecial into a if statement within drawTreasure
 
 let treasures = [];
+let special = [];
+let freeze = [];
+let dex = [];
 
 function setup() {
   createCanvas(600, 600);
@@ -15,26 +18,30 @@ function setup() {
   player2 = new Avatar(random(50,550),random(50,550),3.5,0,'blue',2,0)
 
   for(var i = 0; i < 49; i++){
-    // let wow = new Treasure()
-    treasures.push(new Treasure)
+    let wow = new Treasure(1)
+    treasures.push(wow)
+    dex.push(treasures.indexOf(wow))
   }
-  let special = new Treasure()
-  treasures.push(special)
-  console.log(special)
+  s = new Treasure(2)
+  treasures.push(s)
+  dex.push(treasures.indexOf(s))
+  console.log(s)
+  console.log(dex)
 }
 
 function draw(){
   background(255,225,185);
+  // stroke(255,255,255)
+  // line(player1.x, player1.y, player2.x, player2.y)
   player1.openItem()
   player2.openItem()
 
   for(var i = 0; i < treasures.length; i++){
-    if(i == 49){
-      treasures[49].drawSpecial();
-    } else if (i <= 48){
-    treasures[i].drawTreasure();
+    treasures[i].drawTreasure()
   }
-}
+  // for(var o = 0; o < special.length; o++){
+  //   treasures[o].drawSpecial()
+  // }
 
   player1.drawMe()
   player1.moveMe()
@@ -152,25 +159,36 @@ class Avatar {
     //   }
     // }
   }
+  // if(keyIsDown(81) == true && this.player == 1 && player1.x <= treasures[49].x + 10 && player1.x >= treasures[49].x -10 && player1.y <= treasures[49].y + 10 && player1.y >= treasures[49].y - 10){
+  //   player1.speed = 5
+  // }
+  for(var o = 0; o < special.length; o++){
+    if(keyIsDown(81) == true && this.player == 1 && player1.x <= special[o].x + 10){
+      special.splice(o,1)
+      player1.speed += 3
+    }
+  }
 }
 }
 
 class Treasure {
-  constructor(){
+  constructor(type){
     this.x = random(20,580);
     this.y = random(20,580);
+    this.type = type;
   }
 
   drawTreasure(){
-    stroke(255,0,0)
-    strokeWeight(2)
-    line(this.x - 10, this.y - 10, this.x + 10, this.y + 10)
-    line(this.x - 10, this.y + 10, this.x + 10, this.y - 10)
-  }
-
-  drawSpecial(){
-    noStroke()
-    fill(0,120,0)
-    rect(this.x - 10, this.y - 10, 20, 20)
+    if(this.type == 1){
+      stroke(255,0,0)
+      strokeWeight(2)
+      line(this.x-10, this.y-10, this.x+10, this.y+10)
+      line(this.x+10, this.y-10, this.x-10, this.y+10)
+    }
+    if(this.type == 2){
+      noStroke()
+      fill(0,120,0)
+      rect(this.x+10, this.y+10, 20, 20)
+    }
   }
 }

@@ -163,9 +163,13 @@ class Avatar {
   //   player1.speed = 5
   // }
   for(var o = 0; o < special.length; o++){
-    if(keyIsDown(81) == true && this.player == 1 && player1.x <= special[o].x + 10){
+    if(keyIsDown(81) == true && this.player == 1 && player1.x <= special[o].x + 10 && player1.x >= special[o].x -10 && player1.y <= special[o].y + 10 && player1.y >= special[o].y - 10){
       special.splice(o,1)
       player1.speed += 3
+    }
+    if(keyIsDown(18) == true && this.player == 2 && player2.x <= special[o].x + 10 && player2.x >= special[o].x -10 && player2.y <= special[o].y + 10 && player2.y >= special[o].y - 10){
+      special.splice(o,1)
+      player2.speed += 3
     }
   }
 }
@@ -188,7 +192,7 @@ class Treasure {
     if(this.type == 2){
       noStroke()
       fill(0,120,0)
-      rect(this.x+10, this.y+10, 20, 20)
+      rect(this.x-10, this.y-10, 20, 20)
     }
   }
 }

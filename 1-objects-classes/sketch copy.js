@@ -17,16 +17,17 @@ function setup() {
   player1 = new Avatar(random(50,550),random(50,550),3.5,0,'red',1,0)
   player2 = new Avatar(random(50,550),random(50,550),3.5,0,'blue',2,0)
 
-  for(var i = 0; i < 49; i++){
+  for(var i = 0; i < 46; i++){
     let wow = new Treasure(1)
     treasures.push(wow)
     dex.push(treasures.indexOf(wow))
   }
-  s = new Treasure(2)
-  treasures.push(s)
-  dex.push(treasures.indexOf(s))
-  console.log(s)
-  console.log(dex)
+
+  for(var i = 0; i < 3; i++){
+    let s = new Treasure(2)
+    treasures.push(s)
+    dex.push(treasures.indexOf(s))
+  }
 }
 
 function draw(){
@@ -39,9 +40,6 @@ function draw(){
   for(var i = 0; i < treasures.length; i++){
     treasures[i].drawTreasure()
   }
-  // for(var o = 0; o < special.length; o++){
-  //   treasures[o].drawSpecial()
-  // }
 
   player1.drawMe()
   player1.moveMe()
@@ -131,48 +129,42 @@ class Avatar {
   }
 
   openItem(){
-    for(var i = 0; i < treasures.length; i++){
-    if(keyIsDown(81) == true && this.player == 1 && player1.x <= treasures[i].x + 10 && player1.x >= treasures[i].x -10 && player1.y <= treasures[i].y + 10 && player1.y >= treasures[i].y - 10){
-      // player2.speed = 0;
-      treasures.splice(i,1)
-      player1.point += 1
-    }
-    // if(keyIsDown(81) == false && this.player == 1){
-    //   player2.speed = 4;
-    // }
-    // if(player1.x >= treasures[i].x + 10 || player1.x <= treasures[i].x -10 || player1.y >= treasures[i].y + 10 || player1.y <= treasures[i].y - 10){
-    //   if(this.player == 1){
-    //     player2.speed = 4;
-    //   }
-    // }
-    if(keyIsDown(18) == true && this.player == 2 && player2.x <= treasures[i].x + 10 && player2.x >= treasures[i].x -10 && player2.y <= treasures[i].y + 10 && player2.y >= treasures[i].y - 10){
-      // player1.speed = 0;
-      treasures.splice(i,1)
-      player2.point += 1
-    }
-    // if(keyIsDown(18) == false && this.player == 2){
-    //   player1.speed = 4;
-    // }
-    // if(player2.x >= treasures[i].x + 10 || player2.x <= treasures[i].x -10 || player2.y >= treasures[i].y + 10 || player2.y <= treasures[i].y - 10){
-    //   if(this.player == 2){
-    //     player1.speed = 4;
-    //   }
-    // }
-  }
-  // if(keyIsDown(81) == true && this.player == 1 && player1.x <= treasures[49].x + 10 && player1.x >= treasures[49].x -10 && player1.y <= treasures[49].y + 10 && player1.y >= treasures[49].y - 10){
-  //   player1.speed = 5
-  // }
-  for(var o = 0; o < special.length; o++){
-    if(keyIsDown(81) == true && this.player == 1 && player1.x <= special[o].x + 10 && player1.x >= special[o].x -10 && player1.y <= special[o].y + 10 && player1.y >= special[o].y - 10){
-      special.splice(o,1)
-      player1.speed += 3
-    }
-    if(keyIsDown(18) == true && this.player == 2 && player2.x <= special[o].x + 10 && player2.x >= special[o].x -10 && player2.y <= special[o].y + 10 && player2.y >= special[o].y - 10){
-      special.splice(o,1)
-      player2.speed += 3
+    for(var i = 0; i < treasures.length; i++) {
+      var doSplice = 0;
+
+      // check for Player One gathering treasure
+      if (keyIsDown(81) && this.player==1) {
+        if ((abs(this.x - treasures[i].x)<=10) && (abs(this.y - treasures[i].y)<=10)) {
+          if (treasures[i].type == 1) {
+            this.point += 1;
+            doSplice = 1;
+          }
+          if (treasures[i].type == 2) {
+            this.speed += 1.5;
+            doSplice = 1;
+          }
+        }
+      }
+
+      // check for Player Two gathering treasure
+      if (keyIsDown(18) && this.player==2) {
+        if ((abs(this.x - treasures[i].x)<=10) && (abs(this.y - treasures[i].y)<=10)) {
+          if (treasures[i].type == 1) {
+            this.point += 1;
+            doSplice = 1;
+          }
+          if (treasures[i].type == 2) {
+            this.speed += 1.5;
+            doSplice = 1;
+          }
+        }
+      }
+
+      if (doSplice) {
+        treasures.splice(i,1);
+      }
     }
   }
-}
 }
 
 class Treasure {

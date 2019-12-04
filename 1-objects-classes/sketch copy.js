@@ -10,12 +10,13 @@ let treasures = [];
 let special = [];
 let freeze = [];
 let dex = [];
+let time;
 
 function setup() {
   createCanvas(600, 600);
   background(255,225,185);
-  player1 = new Avatar(random(50,550),random(50,550),3.5,0,'red',1,0)
-  player2 = new Avatar(random(50,550),random(50,550),3.5,0,'blue',2,0)
+  player1 = new Avatar(random(50,550),random(50,550),4,0,'red',1,0)
+  player2 = new Avatar(random(50,550),random(50,550),4,0,'blue',2,0)
 
   for(var i = 0; i < 46; i++){
     let wow = new Treasure(1)
@@ -28,6 +29,8 @@ function setup() {
     treasures.push(s)
     dex.push(treasures.indexOf(s))
   }
+
+  treasures.push(new Treasure(3))
 }
 
 function draw(){
@@ -60,6 +63,22 @@ function draw(){
   text(player1.point, 25,550)
   fill('blue')
   text(player2.point, 25, 580)
+
+  // if(player1.point >= 10){
+  //   fill('red')
+  //   textSize(30)
+  //   text('player 1 wins', width/2, height/2)
+  //   player1.speed = 0
+  //   player2.speed = 0
+  // }
+  //
+  // if(player2.point >= 10){
+  //   fill('blue')
+  //   textSize(30)
+  //   text('player 2 wins', width/2, height/2)
+  //   player1.speed = 0
+  //   player2.speed = 0
+  // }
 }
 
 class Avatar {
@@ -135,12 +154,17 @@ class Avatar {
       // check for Player One gathering treasure
       if (keyIsDown(81) && this.player==1) {
         if ((abs(this.x - treasures[i].x)<=10) && (abs(this.y - treasures[i].y)<=10)) {
+          time = frameCount
           if (treasures[i].type == 1) {
             this.point += 1;
             doSplice = 1;
           }
           if (treasures[i].type == 2) {
-            this.speed += 1.5;
+            this.speed += 2;
+            doSplice = 1;
+          }
+          if(treasures[i].type == 3){
+            player2.speed -= 4
             doSplice = 1;
           }
         }
@@ -154,7 +178,11 @@ class Avatar {
             doSplice = 1;
           }
           if (treasures[i].type == 2) {
-            this.speed += 1.5;
+            this.speed += 2;
+            doSplice = 1;
+          }
+          if(treasures[i].type == 3){
+            player1.speed -= 4
             doSplice = 1;
           }
         }
@@ -185,6 +213,10 @@ class Treasure {
       noStroke()
       fill(0,120,0)
       rect(this.x-10, this.y-10, 20, 20)
+    }
+    if(this.type == 3){
+      fill(150,0,150)
+      triangle(this.x-10, this.y+10, this.x, this.y-10, this.x+10,this.y+10)
     }
   }
 }

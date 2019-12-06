@@ -10,7 +10,7 @@ let treasures = [];
 let special = [];
 let freeze = [];
 let dex = [];
-let time;
+let time = 10;
 
 function setup() {
   createCanvas(600, 600);
@@ -64,22 +64,12 @@ function draw(){
   fill('blue')
   text(player2.point, 25, 580)
 
-  // if(player1.point >= 10){
-  //   fill('red')
-  //   textSize(30)
-  //   text('player 1 wins', width/2, height/2)
-  //   player1.speed = 0
-  //   player2.speed = 0
-  // }
-  //
-  // if(player2.point >= 10){
-  //   fill('blue')
-  //   textSize(30)
-  //   text('player 2 wins', width/2, height/2)
-  //   player1.speed = 0
-  //   player2.speed = 0
-  // }
-}
+  text("time = "+time,400,30);
+
+  if(frameCount%60==0 && time>0){
+    time-=1;
+  }
+
 
 class Avatar {
 

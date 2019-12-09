@@ -3,21 +3,20 @@
 
 let treasures = [];
 let fr = 60;
-let ang = 0;
 
 function setup() {
   createCanvas(600, 600);
   frameRate(fr);
   background(255,225,185);
-  player1 = new Avatar(random(50,550),random(50,550),4,0,'red',1,0)
-  player2 = new Avatar(random(50,550),random(50,550),4,0,'blue',2,0)
+  player1 = new Avatar(random(50,550),random(50,550),4,0,'red',1,0,0)
+  player2 = new Avatar(random(50,550),random(50,550),4,0,'blue',2,0,0)
 
-  for(var i = 0; i < 46; i++){
+  for(var i = 0; i < 20; i++){
     let wow = new Treasure(1)
     treasures.push(wow)
   }
 
-  for(var i = 0; i < 3; i++){
+  for(var i = 0; i < 10; i++){
     let s = new Treasure(2)
     treasures.push(s)
   }
@@ -48,7 +47,7 @@ function draw(){
 
 class Avatar {
 
-	constructor(x,y, speed, score, color, player, point){
+	constructor(x,y, speed, score, color, player, point, ang){
     this.x = x;
     this.y = y;
     this.speed = speed;
@@ -56,6 +55,7 @@ class Avatar {
     this.color = color;
     this.player = player;
     this.point = point;
+    this.ang = ang;
 	}
 
 	drawMe(){
@@ -130,39 +130,18 @@ class Avatar {
       if (keyIsDown(18) && this.player==2) {
         if ((abs(this.x - treasures[i].x)<=10) && (abs(this.y - treasures[i].y)<=10)) {
           wait = 1;
-          if (treasures[i].type == 1) {
-            this.point += 1;
-            doSplice = 1;
-          }
-          if (treasures[i].type == 2) {
-            this.speed += 2;
-            doSplice = 1;
-          }
-          if(treasures[i].type == 3){
-            player1.speed -= 3
-            doSplice = 1;
-          }
+          doneWaiting = 1;
         }
       }
 
       if(wait == 1){
-        var mult = 1;
         angleMode(DEGREES)
         noFill()
-        stroke(255,0,0)
-        if(treasures[i].type == 1){
-          mult = 1;
-        }
-        if(treasures[i].type == 2){
-          mult = 3;
-        }
-        if(treasures[i].type == 3){
-          mult = 6;
-        }
-        arc(player1.x,player1.y - 20,20,20,0,ang*mult)
-        ang++
-        if(ang*mult == 360){
-          ang = 0;
+        stroke(this.color)
+        arc(this.x,this.y - 20,20,20,-1,this.ang*6)
+        this.ang++
+        if(this.ang*6 == 360){
+          this.ang = 0;
           doneWaiting = 1;
         } else{
           doneWaiting = 0;
@@ -178,11 +157,9 @@ class Avatar {
             this.speed += 2;
             doSplice = 1;
           }
-          if(treasures[i].type == 3){
-            player2.speed -= 3
-            doSplice = 1;
-        }
-
+          if (treasures[i].type == 3) {
+            // do something
+          }
         if(doSplice){
           treasures.splice(i,1);
         }

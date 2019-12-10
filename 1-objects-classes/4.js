@@ -19,7 +19,7 @@ function setup() {
     treasures.push(wow)
   }
 
-  for(var i = 0; i < 20; i++){
+  for(var i = 0; i < 15; i++){
     let s = new Treasure(2)
     treasures.push(s)
   }
@@ -76,8 +76,10 @@ function draw(){
 
   fill('red')
   text(player1.point, 25,550)
+  text('RED CONTROLS: WASD Q',25,50)
   fill('blue')
   text(player2.point, 25, 580)
+  text('BLUE CONTROLS: ARROWKEYS MOUSE',25,80)
 }
 
 class Avatar {

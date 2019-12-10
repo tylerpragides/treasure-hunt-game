@@ -33,53 +33,59 @@ function setup() {
 }
 
 function draw(){
-  if(stage == 0){
-    background(255,225,185)
-  }
-  if(stage == 1){
-    background(200,220,255)
-  }
-  if(stage == 2){
+  if(millis() < 5000){
     background(200)
-    treasures.splice(0,treasures.length)
-    fill('blue')
-    text('BLUE WINS', width/2, height/2)
-  }
-  if(stage == 3){
-    background(200)
-    treasures.splice(0,treasures.length)
+    text('RED wins by collecting all the red points', width/2, height/2)
+    text('BLUE wins by shooting red with mouse', width/2, height/2 + 30)
+  } else {
+    if(stage == 0){
+      background(255,225,185)
+    }
+    if(stage == 1){
+      background(200,220,255)
+    }
+    if(stage == 2){
+      background(200)
+      treasures.splice(0,treasures.length)
+      fill('blue')
+      text('BLUE WINS', width/2, height/2)
+    }
+    if(stage == 3){
+      background(200)
+      treasures.splice(0,treasures.length)
+      fill('red')
+      text('RED WINS', width/2, height/2)
+    }
+    // text(floor(millis()),100,100)
+    for(var i = 0; i < treasures.length; i++){
+      treasures[i].drawTreasure()
+    }
+
+    for(var o = 0; o < bullets.length; o++){
+      bullets[o].drawBullet();
+      bullets[o].moveBullet();
+    }
+
+    player2.shoot()
+    player1.win2()
+    player1.win1()
+
+    player1.openItem()
+    player2.openItem()
+    player1.drawMe()
+    player1.moveMe()
+    player2.drawMe()
+    player2.moveMe()
+    player1.collideMe()
+    player2.collideMe()
+
     fill('red')
-    text('RED WINS', width/2, height/2)
+    text(player1.point, 25,550)
+    text('RED CONTROLS: WASD Q',25,50)
+    fill('blue')
+    text(player2.point, 25, 580)
+    text('BLUE CONTROLS: ARROWKEYS MOUSE',25,80)
   }
-  // text(floor(millis()),100,100)
-  for(var i = 0; i < treasures.length; i++){
-    treasures[i].drawTreasure()
-  }
-
-  for(var o = 0; o < bullets.length; o++){
-    bullets[o].drawBullet();
-    bullets[o].moveBullet();
-  }
-
-  player2.shoot()
-  player1.win2()
-  player1.win1()
-
-  player1.openItem()
-  player2.openItem()
-  player1.drawMe()
-  player1.moveMe()
-  player2.drawMe()
-  player2.moveMe()
-  player1.collideMe()
-  player2.collideMe()
-
-  fill('red')
-  text(player1.point, 25,550)
-  text('RED CONTROLS: WASD Q',25,50)
-  fill('blue')
-  text(player2.point, 25, 580)
-  text('BLUE CONTROLS: ARROWKEYS MOUSE',25,80)
 }
 
 class Avatar {

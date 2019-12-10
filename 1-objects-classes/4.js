@@ -208,7 +208,8 @@ class Avatar {
       // if(bullets.length >= 25){
       //   let stoptime = new Date().getTime()
       //   testtest.push(stoptime);
-      //   for(var s = testtest[0]; s < testtest[0]+10000; s++){
+      //   console.log(stoptime)
+      //   for(var s = stoptime; s < stoptime+10000; s++){
       //     bullets.splice(0,treasures.length)
       //   }
       // }

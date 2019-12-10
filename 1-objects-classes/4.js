@@ -213,14 +213,15 @@ class Avatar {
   shoot(){
     if(mouseIsPressed){
       bullets.push(new Bullet(this.x,this.y))
-      // if(bullets.length >= 25){
-      //   let stoptime = new Date().getTime()
-      //   testtest.push(stoptime);
-      //   console.log(stoptime)
-      //   for(var s = stoptime; s < stoptime+10000; s++){
-      //     bullets.splice(0,treasures.length)
-      //   }
-      // }
+      if(bullets.length >= 50){
+        let starttime = new Date().getTime()
+        let stoptime = starttime + 5000
+        testtest.push(starttime);
+        console.log(starttime)
+        for(var s = starttime; s < stoptime; s++){
+          bullets.splice(0,treasures.length)
+        }
+      }
     }
   }
   win2(){
